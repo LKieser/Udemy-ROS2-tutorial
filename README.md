@@ -211,7 +211,7 @@ Need to add code for custom interface into the [package.xml](src/my_robot_interf
   <member_of_group>rosidl_interface_packages</member_of_group>
 ```
 Can then go to the [CmakeLists.txt](src/my_robot_interfaces/CMakeLists.txt) file and delete lines 10-24 of test code. After this, paste the following lines in the dependencies:
-```
+```CMake
 find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "your custom interfaces will be here"
@@ -230,5 +230,5 @@ touch <HardwareStatus.msg>
 ```
 - Name must end with .msg
 - Name must have no spaces
-- Name is seperated by CamelCasing
-- Example interface can be found in [HardwareStatus.msg](src/my_robot_interface/msg/HardwareStatus.msg)
+- Name is separated by CamelCasing
+- Example interface can be found in [HardwareStatus.msg](src/my_robot_interfaces/msg/HardwareStatus.msg)
