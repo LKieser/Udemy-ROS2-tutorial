@@ -162,7 +162,7 @@ Bags are used to save data from a topic during a test so that it can be replayed
 - `ros2 bag info <test>` --get extra data on the bag
 
 ## Services
-ROS2 services are used when it is needed to both send and receive information in one node. They are typically used when that node will need to take an action so services are named with a verb
+ROS2 services are used when it is needed to both send and receive information in one node. They are typically used when that node will need to take an action so services are named with a verb. To decide between a Service and a Topic as yourself, "Am I just sending some data, or do I expect a response after I send the message?"
 - Clients make a *request* for information from a Server
 - Servers receive a Client *request* and send the desired data back in a *response*
 - Services can use one message type for *requests* and one message type for *responses*
@@ -182,4 +182,4 @@ Server <--> Service <--> Client(s)
 - Write to a Service on the command line
     1. `ros2 service type /<currently_running_node>` -- find out the type
     2. `ros2 interface show <example_interface>` -- shows the data types in the interface
-    3. `ros2 service call /<service_name> <example_interface> "{a: 100, b: 200}"`
+    3. `ros2 service call /<service_name> <example_interface> "{a: 100, b: 200}"` -- sends a request from the command line
