@@ -183,3 +183,13 @@ Server <--> Service <--> Client(s)
     1. `ros2 service type /<currently_running_node>` -- find out the type
     2. `ros2 interface show <example_interface>` -- shows the data types in the interface
     3. `ros2 service call /<service_name> <example_interface> "{a: 100, b: 200}"` -- sends a request from the command line
+
+## Custom Interfaces
+Custom Interfaces are the actual "letter" that holds the information going to and from Topics and Services
+- Topics: use `msg` type that holds data it will send
+- Services: use `srv` type that holds two kinds of data: `request` on top and `response` below it
+
+Here are three important online sources for custom interfaces:
+1. [ROS2 Documentation](https://docs.ros.org/en/rolling/Concepts/Basic/About-Interfaces.html) -- This site has a table of all ROS2 data types that can be used
+2. [Example Interfaces](https://github.com/ros2/example_interfaces/tree/rolling/msg) -- This site holds all the example_interfaces that can be used for ROS2
+3. [Common Interfaces](https://github.com/ros2/common_interfaces/tree/rolling/std_srvs/srv) -- This site holds pre-made common interfaces to use for robotics applications
