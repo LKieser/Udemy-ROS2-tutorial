@@ -6,12 +6,12 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # find dependencies
-find_package(ament_cmake REQUIRED)
+find_package(ament_cmake REQUIRED)         # add new packages
 find_package(rclcpp REQUIRED)
 find_package(example_interfaces REQUIRED)
 
-add_executable(cpp_node src/my_first_node.cpp)
-ament_target_dependencies(cpp_node rclcpp)
+add_executable(cpp_node src/my_first_node.cpp)  # add new node name + relative path
+ament_target_dependencies(cpp_node rclcpp)      # add new node name + packages
 
 add_executable(robot_news_station src/robot_news_station.cpp)
 ament_target_dependencies(robot_news_station rclcpp example_interfaces)
@@ -32,7 +32,7 @@ add_executable(add_two_ints_client src/add_two_ints_client.cpp)
 ament_target_dependencies(add_two_ints_client rclcpp example_interfaces)
 
 install(TARGETS 
-  cpp_node
+  cpp_node                    # add new node name
   robot_news_station
   smartphone
   number_counter

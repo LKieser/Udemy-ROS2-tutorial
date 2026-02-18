@@ -14,16 +14,16 @@ public:
 
     void callAddTwoInts(int a, int b)
     {
-        while(!client_->wait_for_service(1s))
+        while(!client_->wait_for_service(1s)) // wait until connection is established
         {
             RCLCPP_WARN(this->get_logger(), "Waiting for the server...");
         }
 
-        auto request = std::make_shared<example_interfaces::srv::AddTwoInts::Request>();
+        auto request = std::make_shared<example_interfaces::srv::AddTwoInts::Request>(); // make request
         request->a = a;
         request->b = b;
 
-        client_->async_send_request(request, std::bind(&AddTwoIntsClientNode::callbackCallAddTwoInts, this, _1));
+        client_->async_send_request(request, std::bind(&AddTwoIntsClientNode::callbackCallAddTwoInts, this, _1)); // send request
 
     }
 
@@ -41,9 +41,9 @@ int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
     auto node = std::make_shared<AddTwoIntsClientNode>();
-    node->callAddTwoInts(12,3);
-    node->callAddTwoInts(1,31);
-    node->callAddTwoInts(112,13);
+    node->callAddTwoInts(12,3); // make client
+    node->callAddTwoInts(1,31); // make another client
+    node->callAddTwoInts(112,13); // make a third client
     rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;

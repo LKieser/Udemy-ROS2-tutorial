@@ -10,7 +10,7 @@ public:
     {
         subscriber_  = this->create_subscription<example_interfaces::msg::String>( // type
             "robot_news", 10,                                                       //  name, queue
-             std::bind(&SmartphoneNode::callbackRobotNews, this, std::placeholders::_1));  // callback function, this, placeholder
+             std::bind(&SmartphoneNode::callbackRobotNews, this, std::placeholders::_1));  // callback function, class, placeholder
         RCLCPP_INFO(this->get_logger(), "Smartphone has been started");
     }
 

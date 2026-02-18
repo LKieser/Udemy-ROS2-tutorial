@@ -9,7 +9,7 @@ int main(int argc, char **argv)
     auto node = std::make_shared<rclcpp::Node>("add_two_ints_client_no_oop"); //node name
     
     auto client = node->create_client<example_interfaces::srv::AddTwoInts>("add_two_ints"); // service name
-    while(!client->wait_for_service(1s))
+    while(!client->wait_for_service(1s)) // wait until connection is established
     {
         RCLCPP_WARN(node->get_logger(), "Waiting for ther server...");
     }
