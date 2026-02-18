@@ -219,7 +219,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "no comma for separating lines"
  )
 ```
-### Build the interface
+### Build and use the interface for Topics
 In the created interface package that is named `my_robot_interfaces` in this example, run
 ```
 mkdir msg
@@ -228,7 +228,35 @@ Then create an interface with
 ```
 touch <HardwareStatus.msg>
 ```
-- Name must end with .msg
-- Name must have no spaces
-- Name is separated by CamelCasing
-- Example interface can be found in [HardwareStatus.msg](src/my_robot_interfaces/msg/HardwareStatus.msg)
+- Name:
+    - must end with .msg
+    - must have no spaces
+    - is separated by CamelCasing
+    - Example interface can be found in [HardwareStatus.msg](src/my_robot_interfaces/msg/HardwareStatus.msg)
+- Use in Python:
+    - Add as dependency as seen in [package.xml](src/my_py_pkg/package.xml)
+    - Call in at the top of the file as seen in [hardware_status_publisher.py](src/my_py_pkg/my_py_pkg/hardware_status_publisher.py)
+- Use in C++:
+    - Add the path to the interface into the vscode workspace folder [c_cpp_properties.json](.vscode/c_cpp_properties.json)
+    - Add the dependency to [package.xml](src/my_cpp_pkg/package.xml)
+    - Add to `find_package` in [CMakeLists.txt](src/my_cpp_pkg/CMakeLists.txt)
+    - Add the #include at the top of the file as seen in [hardware_status_publisher.cpp](src/my_cpp_pkg/src/hardware_status_publisher.cpp)
+
+- **NOTE**: Make a custome service the same way but replace `msg` with `srv`
+
+### Helpful Command Line Tools for Interfaces
+This command shows the data types in a specific interface
+```
+ros2 interface show <example_interface/msg/example>
+```
+This command shows every interface in the system
+```
+ros2 interface list
+```
+This command shows the custome interfaces in one folder
+```
+ros2 interface package <my_robot_interfaces>
+```
+These commands can be used to see what interface is being used on a running node or topic
+- `ros2 node list` then `ros2 node info /<running_node>`
+- `ros2 topic list` then `ros2 topic info /<running_topic>`
