@@ -4,7 +4,7 @@ install/
 log/
 
 # VS Code
-.vscode/
+browse*
 *.code-workspace
 
 # Python

@@ -1,5 +1,29 @@
 # ROS2 Basics Tutorial
 
+- [ROS2 Basics Tutorial](#ros2-basics-tutorial)
+  - [Overview](#overview)
+  - [Setup](#setup)
+      - [Python](#python)
+      - [C++](#c)
+      - [Python](#python-1)
+      - [C++](#c-1)
+  - [Building a Node](#building-a-node)
+    - [Python](#python-2)
+      - [Example](#example)
+    - [C++](#c-2)
+      - [Example](#example-1)
+  - [Helpful Command Line Tools for Nodes](#helpful-command-line-tools-for-nodes)
+  - [Topics](#topics)
+    - [Helpful Command Line Tools for Topics](#helpful-command-line-tools-for-topics)
+    - [Bags](#bags)
+  - [Services](#services)
+    - [Helpful Command Line Tools for Services](#helpful-command-line-tools-for-services)
+  - [Custom Interfaces](#custom-interfaces)
+    - [Setup the interface](#setup-the-interface)
+    - [Build and use the interface for Topics](#build-and-use-the-interface-for-topics)
+    - [Helpful Command Line Tools for Interfaces](#helpful-command-line-tools-for-interfaces)
+
+
 ## Overview
 
 This code is all written as part of a tutorial on ROS2. The tutorial can be found here: [ROS 2 for Beginners](https://www.udemy.com/course/ros2-for-beginners/)
@@ -242,7 +266,7 @@ touch <HardwareStatus.msg>
     - Add to `find_package` in [CMakeLists.txt](src/my_cpp_pkg/CMakeLists.txt)
     - Add the #include at the top of the file as seen in [hardware_status_publisher.cpp](src/my_cpp_pkg/src/hardware_status_publisher.cpp)
 
-- **NOTE**: Make a custome service the same way but replace `msg` with `srv`
+- **NOTE**: Make a custom service the same way but replace `msg` with `srv`
 
 ### Helpful Command Line Tools for Interfaces
 This command shows the data types in a specific interface
@@ -253,7 +277,7 @@ This command shows every interface in the system
 ```
 ros2 interface list
 ```
-This command shows the custome interfaces in one folder
+This command shows the custom interfaces in one folder
 ```
 ros2 interface package <my_robot_interfaces>
 ```
