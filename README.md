@@ -193,3 +193,42 @@ Here are three important online sources for custom interfaces:
 1. [ROS2 Documentation](https://docs.ros.org/en/rolling/Concepts/Basic/About-Interfaces.html) -- This site has a table of all ROS2 data types that can be used
 2. [Example Interfaces](https://github.com/ros2/example_interfaces/tree/rolling/msg) -- This site holds all the example_interfaces that can be used for ROS2
 3. [Common Interfaces](https://github.com/ros2/common_interfaces/tree/rolling/std_srvs/srv) -- This site holds pre-made common interfaces to use for robotics applications
+
+### Setup the interface
+It is always good to create a new package for the interfaces. Do this with
+```
+ros2 pkg create <my_robot_interfaces>
+```
+- This will automatically create a C++ pkg
+- Can immediately remove the un-needed folders with
+```
+rm -r include/ src/
+```
+Need to add code for custom interface into the [package.xml](src/my_robot_interfaces/package.xml)
+```xml
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+```
+Can then go to the [CmakeLists.txt](src/my_robot_interfaces/CMakeLists.txt) file and delete lines 10-24 of test code. After this, paste the following lines in the dependencies:
+```
+find_package(rosidl_default_generators REQUIRED)
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "your custom interfaces will be here"
+  "one per line"
+  "no comma for separating lines"
+ )
+```
+### Build the interface
+In the created interface package that is named `my_robot_interfaces` in this example, run
+```
+mkdir msg
+```
+Then create an interface with
+```
+touch <HardwareStatus.msg>
+```
+- Name must end with .msg
+- Name must have no spaces
+- Name is seperated by CamelCasing
+- Example interface can be found in [HardwareStatus.msg](src/my_robot_interface/msg/HardwareStatus.msg)
