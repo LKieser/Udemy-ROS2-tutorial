@@ -10,7 +10,9 @@ find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/HardwareStatus.msg" # relative path to msg interface
+  "msg/LedPanelState.msg"
   "srv/ComputeRectangleArea.srv" # relative path to srv interface
+  "srv/SetLed.srv"
  )
 
 

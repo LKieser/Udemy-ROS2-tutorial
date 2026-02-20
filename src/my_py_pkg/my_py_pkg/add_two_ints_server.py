@@ -11,7 +11,7 @@ class AddTwoIntsServerNode(Node):
 
         self.get_logger().info("Add Two Ints server has been started")
 
-    # this callback is called when a request is recieved by the server
+    # this callback is called when a request is received by the server
     def callback_add_two_ints(self, request: AddTwoInts.Request, response: AddTwoInts.Response): # give type to each variable
         response.sum = request.a + request.b
         self.get_logger().info(f"{request.a} + {request.b} = {response.sum}")

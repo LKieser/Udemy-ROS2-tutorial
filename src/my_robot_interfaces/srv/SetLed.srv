@@ -1,0 +1,4 @@
+bool battery_low
+---
+bool led_on
+string message

@@ -243,6 +243,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "no comma for separating lines"
  )
 ```
+This is where each new interface will be added after it is made
 ### Build and use the interface for Topics
 In the created interface package that is named `my_robot_interfaces` in this example, run
 ```
@@ -284,3 +285,4 @@ ros2 interface package <my_robot_interfaces>
 These commands can be used to see what interface is being used on a running node or topic
 - `ros2 node list` then `ros2 node info /<running_node>`
 - `ros2 topic list` then `ros2 topic info /<running_topic>`
+- The following examples were used for a custom interface, topic, and service call [LED_panel.py](src/my_py_pkg/my_py_pkg/LED_panel.py) and [battery_node.py](src/my_py_pkg/my_py_pkg/battery_node.py)
