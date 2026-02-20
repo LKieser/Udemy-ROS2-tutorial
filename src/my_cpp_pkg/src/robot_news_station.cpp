@@ -6,8 +6,12 @@ using namespace std::chrono_literals;
 class RobotNewsStationNode : public rclcpp::Node
 {
 public:
-    RobotNewsStationNode() : Node("robot_news_station"), robot_name_("R2D2")
+    RobotNewsStationNode() : Node("robot_news_station")
     {
+        // add parameters
+        this->declare_parameter("name", "Alexander");
+        robot_name_ = this->get_parameter("name").as_string();
+        // make publisher and timer
         publisher_ = this ->  create_publisher<example_interfaces::msg::String>("robot_news", 10); // name, packages in queue
         timer_ = this->create_wall_timer(0.5s, std::bind(&RobotNewsStationNode::publishNews, this)); // class name, callback function, class
         RCLCPP_INFO(this->get_logger(), "Robot News Station  has been started");

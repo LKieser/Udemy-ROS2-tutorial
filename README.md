@@ -22,6 +22,9 @@
     - [Setup the interface](#setup-the-interface)
     - [Build and use the interface for Topics](#build-and-use-the-interface-for-topics)
     - [Helpful Command Line Tools for Interfaces](#helpful-command-line-tools-for-interfaces)
+  - [Ros2 Parameters](#ros2-parameters)
+    - [Helpful Parameter Commands](#helpful-parameter-commands)
+    - [Parameter Yaml File](#parameter-yaml-file)
 
 
 ## Overview
@@ -286,3 +289,43 @@ These commands can be used to see what interface is being used on a running node
 - `ros2 node list` then `ros2 node info /<running_node>`
 - `ros2 topic list` then `ros2 topic info /<running_topic>`
 - The following examples were used for a custom interface, topic, and service call [LED_panel.py](src/my_py_pkg/my_py_pkg/LED_panel.py) and [battery_node.py](src/my_py_pkg/my_py_pkg/battery_node.py)
+
+
+## Ros2 Parameters
+ROS2 parameter are used to set values at run time. Typically these values would be settings for the node that may need to change so they can't be hardcoded. A parameter is specific to each node. For each parameter, in the code:
+- Declare the parameter
+- Get the parameter value
+- Example in [number_publisher.py](src/my_py_pkg/my_py_pkg/number_publisher.py) and [number_publisher.cpp](src/my_cpp_pkg/src/number_publisher.cpp)
+
+### Helpful Parameter Commands
+This command shows the available parameters
+```
+ros2 param list
+```
+Use this to run the parameter. You can run multiple parameters with one line as seen here
+```
+ros2 run my_py_pkg number_publisher --ros-args -p number:=3 -p timer_period:=0.5
+```
+Use this to see the current value of the parameter
+```
+ros2 param get /<currently_running_node> <param_you_want_details_on>
+```
+Use this to set a new default parameter value in the terminal. If this is done the code in the file will need to be modified to add a `parameter_callback` as seen in [number_publisher.py](src/my_py_pkg/my_py_pkg/number_publisher.py)
+```
+ros2 param set /<currently_running_node> <param_you_want_details_on> <new value>
+```
+
+### Parameter Yaml File
+Yaml files are used to run may parameters at once through a file. Create a folder and then a file that we will call `number_params.yaml` and it will look like this
+```yaml
+# first 2 lines are needed in every yaml file
+/Number_Publisher: # node name
+  ros__parameters: # use 2 spaces
+    number: 5      # use another 2 spaces and can now list all params if desired
+    timer_period: 0.7
+```
+Run this yaml file with
+```bash
+ros2 run my_py_pkg <example_node> --ros-args --params-file ~/<example_folder>/<number_params.yaml>
+```
+If it is needed, a second node can be added in the Yaml file and then when the original node is called it can be renamed to another node that is in the yaml file using the node renaming argument
