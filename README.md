@@ -25,6 +25,14 @@
   - [Ros2 Parameters](#ros2-parameters)
     - [Helpful Parameter Commands](#helpful-parameter-commands)
     - [Parameter Yaml File](#parameter-yaml-file)
+  - [Launch Files](#launch-files)
+    - [Setup the launch file workspace](#setup-the-launch-file-workspace)
+    - [Build a launch file](#build-a-launch-file)
+    - [Additional launch file functionality](#additional-launch-file-functionality)
+      - [Remapping](#remapping)
+      - [Parameters](#parameters)
+      - [Namespaces](#namespaces)
+  - [If there are any arguments in the code that come after this be sure they don't include a `/` in front of them or they will not have the same name](#if-there-are-any-arguments-in-the-code-that-come-after-this-be-sure-they-dont-include-a--in-front-of-them-or-they-will-not-have-the-same-name)
 
 
 ## Overview
@@ -328,4 +336,84 @@ Run this yaml file with
 ```bash
 ros2 run my_py_pkg <example_node> --ros-args --params-file ~/<example_folder>/<number_params.yaml>
 ```
-If it is needed, a second node can be added in the Yaml file and then when the original node is called it can be renamed to another node that is in the yaml file using the node renaming argument
+If it is needed, a second node can be added in the Yaml file. This node must be called by a different name. To use this node with it's parameter settings the ros2 run command must be given a --ros-args and node name switch to match the Yaml file's name.
+
+## Launch Files
+Launch files allow you to start a bunch of nodes all at once from one file. This is useful when you have a lot of nodes and don't want to run them one at a time in a terminal
+### Setup the launch file workspace
+While a launch file could be made in any pkg it is standard to make a separate pkg to do hold the launch files. This pkg can be placed in the ros2_ws/src directory
+```
+ros2 pkg create <robot_name>_bringup
+```
+Then it is good to get rid of the unused folders made by the pkg create command and add the launch folder
+```
+rm -r include/ src/
+```
+```
+mkdir launch
+```
+In the pkg now go to the [CMakeLists.txt](src/my_robot_bringup/CMakeLists.txt) file and add the following code
+```
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+```
+### Build a launch file
+- All launch file code will go between the `<launch></launch>`. This can be seen here in [number_app.launch.xml](src/my_robot_bringup/launch/number_app.launch.xml). This file is placed in the `launch` directory. An example of the bare bones of a launch file are included here:
+```xml
+<launch>
+    <!--list the package name and then the node executable name just like you would for a ros2 run command-->
+    <node pkg="my_py_pkg" exec="number_publisher" /> 
+    <node pkg="my_cpp_pkg" exec="number_counter" />
+</launch>
+```
+- All pkgs being used in the launch file must be included in the dependencies in [package.xml](src/my_robot_bringup/package.xml)
+- Once finished run:
+```
+colcon build --packages-select <robot_name>_bringup
+```
+```
+source install/setup.bash
+```
+```
+ros2 launch <robot_name>bringup number_app.launch.xml 
+```
+- A python launch file can be used to do the same thing as xml if needed as seen in [number_app.launch.py](src/my_robot_bringup/launch/number_app.launch.py) but it is way harder to use Python so always use xml. Sometimes there may be a node that can only be run through Python and if this the case, you can simply run that specific node in Python and then include it in the xml file where all the rest of the code will be run as seen in [number_app_from_python.xml](src/my_robot_bringup/launch/number_app_from_python.launch.xml)
+  
+### Additional launch file functionality
+#### Remapping
+To rename the node use this
+```xml
+name="my_number_publisher"
+```
+To rename the topic use this
+```xml
+<remap from="/number" to="/my_number" />
+```
+#### Parameters
+Can run parameters directly in xml with
+```xml
+<param name="number" value="6" />
+```
+Can also run parameters through yaml file.
+- First make a `config` directory in the `<robot_name>_bringup` pkg
+- Then add this config directory to the [CMakeLists.txt](src/my_robot_bringup/CMakeLists.txt) file
+- Finally use this to include the yaml file that was placed in config:
+```xml
+<param from="$(find-pkg-share <robot_name>_bringup)/config/<yaml_file.yaml>" />
+```
+#### Namespaces
+Adding a namespace to a node changes every name inside to add the namespace before it. This can be done on the command line:
+```
+ros2 run my_cpp_pkg number_publisher --ros-ars -r __ns:=/test
+```
+- The node name is now `/test/number_publisher` and the topic name is `/test/number` and so on
+- If you provide a leading slash to either of these in the files code like `/number` then namespace will not change that topic when it changes the others
+- Namespaces can also be changed in the launch file with this:
+```
+namespace="/abc"
+```
+If there are any arguments in the code that come after this be sure they don't include a `/` in front of them or they will not have the same name
+---
+All of these can be seen in the example file [number_app.launch.xml](src/my_robot_bringup/launch/number_app.launch.xml)

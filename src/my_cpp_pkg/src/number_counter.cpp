@@ -22,7 +22,7 @@ public:
         reset_counter_server_= this->create_service<example_interfaces::srv::SetBool>(
             "reset_counter",                                                         // service name
             std::bind(&NumberCounterNode::callbackResetCounter, this, _1, _2));    // bind function to instance (this->callback) _1  = request /  _2 = response
-        RCLCPP_INFO(this->get_logger(), "Add Two Ints Service has been started");
+        RCLCPP_INFO(this->get_logger(), "Number Counter Service has been started");
 
     }
 

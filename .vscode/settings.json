@@ -11,6 +11,7 @@
         "/opt/ros/jazzy/lib/python3.12/site-packages"
     ],
     "cSpell.words": [
+        "bringup",
         "chmode",
         "colcon",
         "ints",

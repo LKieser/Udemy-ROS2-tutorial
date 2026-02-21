@@ -1,0 +1,16 @@
+<launch>
+    <!--list the package name and then the node executable name just like you would for a ros2 run command-->
+    <node pkg="my_cpp_pkg" exec="number_counter" name="my_number_counter" namespace="/abc"> <!--use name= to rename the Node and namespace to add that in behind each-->
+        <remap from="number" to="my_number" /> <!--use remap to rename the Topic-->
+    </node>
+    <node pkg="my_py_pkg" exec="number_publisher" name="my_number_publisher" namespace="/abc"> 
+        <remap from="number" to="my_number" /> 
+        <!--Use this to add a parameter value directly-->
+        <!-- <param name="number" value="6" /> 
+        <param name="timer_period" value="1.5" /> -->
+
+        <!-- Add in Yaml file: find-pkg-share <pkg>)relative_path_to_file -->
+        <param from="$(find-pkg-share my_robot_bringup)/config/number_app.yaml" />
+    </node>
+    
+</launch>
