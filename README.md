@@ -44,7 +44,12 @@ This tutorial will be a step by step guide into building a complete ROS2 applica
 
 Because this tutorial is in Python and C++, I will include the code for both in this `README` file and will denote that with either writing Python or C++ above it.
 
-
+## Install ROS2
+To install on a machine running ubuntu go to [Ubuntu deb packages](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html) and follow the instructions.
+- Add this final line of code from the setup page to the `.bashrc` file in the home directory
+```
+source /opt/ros/jazzy/setup.bash
+```
 ## Setup
 
 First create a folder for the ROS2 workspace. Inside this folder create a `/src` directory. 
